@@ -17,6 +17,10 @@ struct complex fill (){
 struct complex *fill1 (){
     struct complex *x;
     x= (struct complex*) malloc(sizeof(struct complex));
+    if (x == NULL) {
+        printf("Memory allocation failed\n");
+        free(x);
+    }
     printf("reel=");
     scanf("%d",&x->reel);
     printf("img=");
@@ -29,20 +33,38 @@ struct complex sum(struct complex x , struct complex y){
     r.img = x.img + y.img;
     return r;
 }
-struct complex *sum2(struct complex* x , struct complex* y){
-    struct complex r ;
-    r.reel = x.reel + y.reel;
-    r.img = x.img + y.img;
+struct complex* sum2(struct complex *x , struct complex *y){
+    struct complex *r ;
+    r= (struct complex*) malloc(sizeof(struct complex));
+    if (r == NULL) {
+        printf("Memory allocation failed\n");
+        free(r);
+    }
+    r->reel = x->reel + y->reel;
+    r->img = x->img + y->img;
     return r;
 }
+
 int main() {
     struct complex x = fill();
     struct complex *y = fill1();
-    
-    printf("%d",y->reel);    
-    
-    
-    
+    struct complex s = sum(x,*y);
+    struct complex *r = sum2(&x,y);
+    printf("result without pointer :\n");
+    printf("img =%d\n",s.img);
+    printf("reel =%d\n",s.reel);
+    printf("result with pointer :\n");
+    printf("img =%d\n",r->img);
+    printf("reel =%d\n",r->reel);
+    free(y);
+    free(r)
     return 0 ;
 }
+
+
+
+
+
+
+
 
