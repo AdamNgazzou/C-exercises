@@ -1,0 +1,48 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+
+void load (int* t,int n){
+    for(int i=0; i<n;i++){
+        printf("t[%d]=",i);
+        scanf("%d",&t[i]);
+    }
+}
+void display(int* t,int n){
+    for(int i=0; i<n;i++){
+        printf("\nt[%d]= %d",i,t[i]);
+    }
+}
+void main() {
+    int* A,*B;
+    int n , m ;
+    do{
+        printf("n=");
+        scanf("%d",&n);
+        printf("\nm=");
+        scanf("%d",&m);
+    }while (n<0 || m<0);
+    A = (int *)malloc(n * sizeof(int));
+    B = (int *)malloc(m * sizeof(int));
+    if (A == NULL || B==NULL) {
+        printf("Memory allocation failed!\n");
+        return ;
+    }
+    load(A,n);
+    load(B,m);
+    A= realloc(A,(n+m)*sizeof(int));
+    for(int i=0;i<m;i++){
+        A[n+i]=B[i];
+    }
+    display(A,m+n);
+    free(A);
+    free(B);
+    A=NULL;
+    B=NULL;
+    
+}
+
+
+
+
+
