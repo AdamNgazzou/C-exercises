@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct student {
+    char* name;
+    char* firstname;
+    float mean;
+};
+
+void fillS(struct student group[100],int *N){
+    group[*N].name =(char*) malloc(100*sizeof(char));
+    group[*N].firstname =(char*) malloc(100*sizeof(char));
+    printf("name =");
+    scanf("%s",group[*N].name);
+    printf("firstname =");
+    scanf("%s",group[*N].firstname);
+    printf("mean =");
+    scanf("%f",&group[*N].mean);
+    (*N)++;
+}
+void fillD(struct student *group,int *N){
+    group =(struct student*)realloc(group,((*N)+1)*sizeof(struct student));
+    group[*N].name =(char*) malloc(100*sizeof(char));
+    group[*N].firstname =(char*) malloc(100*sizeof(char));
+    printf("name =");
+    scanf("%s",group[*N].name);
+    printf("firstname =");
+    scanf("%s",group[*N].firstname);
+    printf("mean =");
+    scanf("%f",&group[*N].mean);
+    
+    free(group[*N].name);
+    free(group[*N].firstname);
+    (*N)++;
+}
+float calcul_average(struct student* group,int *N){
+    float avg=0;
+    for(int i=0;i<*N;i++){
+        avg=avg+group[i].mean;
+        printf("\n %f",group[i].mean);
+    }
+    return avg/(*N);
+}
+void fill(struct student* group , int* N){
+
+    for(int i=0;i<*N;i++){
+        group[i].name =(char*) malloc(100*sizeof(char));
+        group[i].firstname =(char*) malloc(100*sizeof(char));
+        printf("name =");
+        scanf("%s",group[i].name);
+        printf("firstname =");
+        scanf("%s",group[i].firstname);
+        printf("mean =");
+        scanf("%f",&group[i].mean);
+    }
+}
+int main() {
+    int N=7;
+    struct student *group;
+    group = (struct student*) malloc((N) * sizeof(struct student));
+    fill(group,&N);
+    printf("%d",N);
+    printf("\n%f",calcul_average(group,&N));
+    free(group);
+    return 0;
+}
+
+
+
+
+
+
