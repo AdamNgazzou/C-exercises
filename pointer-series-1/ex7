@@ -1,0 +1,48 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+
+struct complex{
+    int reel;
+    int img;
+};
+struct complex fill (){
+    struct complex x;
+    printf("reel=");
+    scanf("%d",&x.reel);
+    printf("img=");
+    scanf("%d",&x.img);
+    return x;
+}
+struct complex *fill1 (){
+    struct complex *x;
+    x= (struct complex*) malloc(sizeof(struct complex));
+    printf("reel=");
+    scanf("%d",&x->reel);
+    printf("img=");
+    scanf("%d",&x->img);
+    return x;
+}
+struct complex sum(struct complex x , struct complex y){
+    struct complex r ;
+    r.reel = x.reel + y.reel;
+    r.img = x.img + y.img;
+    return r;
+}
+struct complex *sum2(struct complex* x , struct complex* y){
+    struct complex r ;
+    r.reel = x.reel + y.reel;
+    r.img = x.img + y.img;
+    return r;
+}
+int main() {
+    struct complex x = fill();
+    struct complex *y = fill1();
+    
+    printf("%d",y->reel);    
+    
+    
+    
+    return 0 ;
+}
+
