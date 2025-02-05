@@ -18,7 +18,7 @@ void load (int* t,int n){
     }
 }
 void display(int* t,int n){
-    for(int i; i<n;i++){
+    for(int i=0; i<n;i++){
         printf("\nt[%d]= %d",i,t[i]);
     }
 }
@@ -39,6 +39,20 @@ int maximum(int* t,int n,int* max){
     }
     max = t+index;
 }
+void eliminate(int* t,int *n ,int x){
+    int* pos = seq(t,*n,x);
+    if (pos==NULL) return ;
+    for(int i = 0 ; i<*n ; i++){
+        if(t+i == pos) {
+            for(int j=i;j<*n-1;j++){
+                printf("\n%d %d",t[j],t[j+1]);
+                t[j] = t[j+1];
+            }
+            break;
+        }
+    }
+    (*n)--;
+}
 void main() {
     int *t,*max;
     int n,x;
@@ -57,11 +71,11 @@ void main() {
     if(pos==NULL) printf("\ndidn't found it");
     else printf("the adress of %d is %d\n",x,pos);
     maximum(t,n,max);
-    printf("%d",*'max);
-    
+    eliminate(t,&n,x);
+    printf("\n n=%d ",n);
+    display(t,n);
     
     
 }
-
 
 
