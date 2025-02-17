@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+struct stack {
+    int key;
+    struct stack *next;
+};
+
+struct stack *create_stack(){
+    return (NULL);
+}
+
+unsigned stack_empty(struct stack *p){
+    return(p==NULL);
+}
+
+int last(struct stack *p){
+    assert(!stack_empty(p));
+    return (p->key);
+}
+
+void push (int info, struct stack **p){
+    struct stack *q;
+    q=(struct stack*)malloc(sizeof(struct stack*));
+    q->key=info;
+    q->next=*p;
+    *p=q;
+}
+
+void pop(struct stack **p){
+    struct stack *q;
+    assert(!stack_empty(*p));
+    q=*p;
+    *p=(*p)->next;
+}
+
+
+
+void main() {
+    struct stack *p1;
+    struct stack *p2;
+    unsigned i;
+    p1=create_stack();
+    p2=create_stack();
+    for(i=1; i<=10;i++) push(i,&p1);
+    for(i=11;i<=20;i++) push(i,&p2);
+    for(i=1;i<=10;i++){
+        printf("%d \t %d \n ",last(p1),last(p2));
+        pop(&p1);
+        pop(&p2);
+    }if(stack_empty(p1)&&stack_empty(p2)) printf("done");
+    else printf("problem with size !");
+
+
+}
