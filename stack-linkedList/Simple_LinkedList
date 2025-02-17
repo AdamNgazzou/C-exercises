@@ -27,6 +27,7 @@ void push (int info, struct stack **p){
     q->next=*p;
     *p=q;
 }
+//what i understand its that its a pointer pointing to a pointer that is more like itself , that's why we do  *p=q
 
 void pop(struct stack **p){
     struct stack *q;
@@ -35,6 +36,7 @@ void pop(struct stack **p){
     *p=(*p)->next;
 }
 
+//the reason why we use q=*p is to prevent memory leak , pointing a pointer to that adress is the only way that we can free it later and not to lose it
 
 
 void main() {
