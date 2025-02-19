@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct {
+    int last ;
+    int size ;
+    int stack[50];
+}Stack;
+
+int isEmpty(Stack p) {
+    return p.last == 0;
+}
+int isFull(Stack p) {
+    return p.last == p.size;
+}
+void push(Stack *p, int x) {
+    p->stack[p->last++]=x;
+}
+int pop(Stack *p) {
+    return p->stack[--p->last];
+}
+void sort (Stack *p,int val) {
+    Stack *q = (Stack *)malloc(sizeof(Stack));
+    int x;
+    while (!isEmpty(*p) && val < p->stack[p->last-1]) {
+        x=pop(p);
+        push(q,x);
+    }
+    push(p,val);
+    while (!isEmpty(*q)) {
+        x=pop(q);
+        push(p,x);
+    }
+    free(q);
+}
+
+int main(void) {
+    Stack p;
+    int n,x;
+    printf("size=");
+    scanf("%d",&p.size);
+    p.last =0;
+    while (!isFull(p)) {
+        printf("p=");
+        scanf("%d",&x);
+        push(&p,x);
+    }
+    printf("give a value");
+    scanf("%d",&x);
+    sort(&p,x);
+    while (!isEmpty(p)) {
+        printf("%d \n",pop(&p));
+    }
+}
