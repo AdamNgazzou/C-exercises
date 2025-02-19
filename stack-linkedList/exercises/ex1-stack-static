@@ -20,6 +20,8 @@ int pop(Stack *p) {
 }
 void sort (Stack *p,int val) {
     Stack *q = (Stack *)malloc(sizeof(Stack));
+    q->last=0;
+    q->size=p->size;
     int x;
     while (!isEmpty(*p) && val < p->stack[p->last-1]) {
         x=pop(p);
