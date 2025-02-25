@@ -1,0 +1,54 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct{
+    int last ; 
+    int size;
+    char stack[50];
+}myStack;
+
+int isEmpty(myStack p){
+    return p.last==0;
+}
+int isFull(myStack p){
+    return p.last ==p.size;
+}
+void push(myStack *p,char v){
+    p->stack[p->last++]=v;
+}
+int pop(myStack *p){
+    return p->stack[--p->last];
+}
+
+int parnth(char ch[50],int min){
+    int count=0,pos=0;
+    for(int i = 0 ;i<strlen(ch) ; i++){
+        if(ch[i]=='(') {
+            count++;
+            if(count<=min){
+                pos=i;
+                min=count;
+            }
+        }
+        if(ch[i] ==')') count--;
+    }
+    return pos ;
+}
+void display(myStack p){
+    printf("hey");
+    while(!isEmpty(p)){
+        printf("%s",pop(&p));
+    }
+}
+
+int main() {
+    myStack p;
+    p.last=0;
+    p.size=2;
+    char ch[50]="a+(b-(c*d)+8.14)-(d*k)";
+    for(int i = 0 ; i<strlen(ch) ; i++) push(&p,ch[i]);
+    display(p);
+    
+}
+
