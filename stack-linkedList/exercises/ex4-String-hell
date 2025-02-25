@@ -1,0 +1,87 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct{
+    int last ; 
+    int size;
+    char stack[50][50];
+}myStack;
+
+int isEmpty(myStack p){
+    return p.last==0;
+}
+int isFull(myStack p){
+    return p.last ==p.size;
+}
+void push(myStack *p,char v[50]){
+    strcpy(p->stack[p->last++],v);
+}
+char* pop(myStack *p){
+    return p->stack[--p->last];
+}
+
+void backspace(char *ch){
+    int count =0;
+    for(int j=0 ; j<strlen(ch);j++){
+        while(ch[j]=='#' ) {
+            for(int i=j;i<strlen(ch);i++){
+                ch[i]=ch[i+1];
+            }
+            for(int i=j-1;i<strlen(ch);i++){
+                ch[i]=ch[i+1];
+            }
+            j--;
+        }
+    }
+}
+
+void redirecting(myStack *p,char ch[50]){
+    int start=0,y=0,j=0,test=1;
+    
+    char t[50];
+    
+    for (int i = 0; i < strlen(ch); i++) {
+        if (ch[i] == '$' && test) {
+            for (int j = start; j < i; j++) {
+                if(ch[j]=='%') {
+                    y=0;
+                    t[0]='\0';
+                }
+                else{
+                    t[y] = ch[j];
+                    y++;
+                }
+            }
+            t[y] = '\0';
+            push(p, t);
+            y = 0;
+            start = i+1; 
+        }
+    
+    }
+}
+int perc(char ch[50]){
+    for(int j=0 ; j<strlen(ch);j++){
+        if(ch[j]=='%') return 0;
+    }
+    return 1;
+}
+int main() {
+    char ch[50],test;
+    myStack p;
+    p.size=2;
+    p.last=0;
+    printf("Enter your name: ");
+    fgets(ch, sizeof(ch), stdin);
+    
+    redirecting(&p,ch);
+    while(!isEmpty(p)){
+        strcpy(ch,pop(&p));
+        test=perc(ch);
+        backspace(ch);
+        printf("%s ",ch);
+    }
+
+    return 0;
+}
