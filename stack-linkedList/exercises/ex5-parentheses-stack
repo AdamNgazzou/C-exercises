@@ -1,0 +1,68 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+    int last ;
+    int size ;
+    int stack[50];
+}stack;
+
+int isEmpty(stack p){
+    return p.last ==0;
+}
+int isFull(stack p){
+    return p.last ==p.size;
+}
+void push(stack *p,char val){
+    p->stack[p->last++]=val;
+}
+char pop(stack *p){
+    return p->stack[--p->last];
+}
+
+void adding_stack(stack *p,char ch[50]){
+    for(int i = 0 ; i < strlen(ch) ; i++){
+        push(p,ch[i]);
+    }
+}
+void display_stack(stack p,int n){
+    char x ;
+    for (int i = 0 ; i < n ; i++){
+        x = pop(&p);
+        printf("%c \n",x);
+    }
+}
+void algorithm_find_parenth(stack s , char ch[50]){
+    for (int i = 0; i < strlen(ch); i++) {
+        if (ch[i] == '(') {
+            push(&s, i); // Store position of '('
+        } else if (ch[i] == ')') {
+            int start = pop(&s); // Get the last unmatched '('
+            if (start != -1) {
+                for (int j = start; j <= i; j++) {
+                    printf("%c", ch[j]);
+                }
+                printf("\n");
+            }
+        }// it pushes and pops dynamically ,  
+    }
+} 
+
+
+int main() {
+    stack p ;
+    p.last = 0;
+    char ch[50]="a+(b-(c*d)+8.14)-(d*k)";
+    //printf("give the size max of the stack 1");
+    //scanf("%d",&p.size);
+    p.size = 50;
+    adding_stack(&p,ch);
+    algorithm_find_parenth(p,ch);
+
+    return 0;
+}
+
+
+
