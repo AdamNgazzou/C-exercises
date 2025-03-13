@@ -1,0 +1,98 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct{
+    int last ;
+    int size ;
+    int mystack[50] ;
+}stack;
+
+void createStack(stack *s,int x){
+    s->last = 0 ;
+    s->size = x ; 
+}
+
+int emptyStack(stack s){
+    return s.last == 0 ;
+}
+int lastStack(stack s){
+    return s.mystack[s.last];
+}
+void pushStack(stack *s,int val){
+    s->mystack[s->last++] = val ;
+}
+int popStack(stack *s){
+    return s->mystack[--s->last];
+}
+void displayStack(stack s){
+    while(!emptyStack(s)){
+        printf("stack = %d \n",popStack(&s));
+        //printf("stack[%d] = %d \n",i+1,mystack[s.last - i]);
+    }
+}
+int *stackMax(stack s){
+    int *max = &s.mystack[0];
+    
+    for(int i = 0 ; i< s.last+1 ; i++){
+        if(*max < s.mystack[i]) max = &s.mystack[i];
+    }
+    return max;
+}
+int prime(int x){
+    for(int i = 2 ; i<(x/2) ; i++){
+        if(x%i == 0) return 0 ;
+    }
+    return 1 ;
+}
+int stackPrime(stack s){
+    int counter = 0 ;
+    if(!emptyStack(s)){
+        for(int i = 0 ; i < s.last ; i++){
+            if(prime(s.mystack[i])) counter++;
+        }
+    }
+    return counter;
+}
+
+void seperateEvenOdd(stack s, stack *even, stack *odd) {
+    for (int i = 0; i < s.last; i++) { 
+        if (s.mystack[i] % 2 == 0)
+            pushStack(even, s.mystack[i]);
+        else
+            pushStack(odd, s.mystack[i]);
+    }
+}
+
+
+
+
+int main() {
+    stack s ;
+    int x ;
+    do{
+        printf("x = ");
+        scanf("%d",&x);
+    }while(x<=0);
+    createStack(&s,x);
+    for(int i = 0 ; i < s.size ; i++){
+        pushStack(&s,i);
+    }
+    displayStack(s);
+    
+    int *max = stackMax(s);
+    printf("max = %d \n",max);
+    
+    int prime = stackPrime(s);
+    printf("prime numbers counter = %d \n",prime);
+    
+    stack odd , even;
+    createStack(&odd,x);
+    createStack(&even,x);
+    seperateEvenOdd(s,&even,&odd);
+    printf("this is even stack :\n");
+    displayStack(even);
+    printf("this is odd stack : \n");
+    displayStack(odd);
+}
