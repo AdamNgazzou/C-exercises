@@ -1,0 +1,61 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct {
+    int last; 
+    int size ;
+    int mystack[50];
+}stack;
+
+void create_stack(stack *s,int n){
+    s->last = 0 ;
+    s->size = n;
+}
+int is_empty(stack s){
+    return s.last == 0;     
+}
+int is_full(stack s){
+    return s.last == s.size ;
+}
+void push(stack *s,int val){
+    s->mystack[s->last++] = val ;
+}
+int pop(stack *s){
+    return s->mystack[--s->last] ; 
+}
+int last(stack s){
+    return s.mystack[--s.last];
+}
+int push_asc(stack *s , int val){
+    stack p ; 
+    create_stack(&p,s->size);
+    while(last(*s) > val ){
+        push(&p,pop(s));
+    }
+    push(s,val);
+    while(!is_empty(p)){
+        push(s,pop(&p));        
+    }
+}
+void display_stack(stack s){
+    while(!is_empty(s)) printf("%d \n",pop(&s));
+
+}
+
+
+int main() {
+    stack s ;
+    int size = 5;
+    create_stack(&s,size);
+    for(int i = 0 ; i < size ; i++){
+        push(&s,i);
+    }
+    push_asc(&s,10);
+    display_stack(s);
+
+}
+
+
+
