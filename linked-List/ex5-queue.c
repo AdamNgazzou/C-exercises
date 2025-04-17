@@ -64,23 +64,37 @@ void deleteThirdCity(queue *q){
     free(third);
 }
 
-  
-void display(queue *q,int n ){
+void delete_starts_S(queue *q) {
+    queue temp;
+    city c;
+    create_queue(&temp);
+
+    while (!isEmpty(*q)) {
+        c = look(*q);
+        dequeue(q); // Remove the element after looking at it
+
+        if (!(c.name[0] == 's' || c.name[0] == 'S')) {
+            enqueue(&temp, c);
+        }
+    }
+    *q = temp;
+}
+void display(queue *q){
     struct element *curr = q->head;
-    for(int i = 0 ; i<n  ; i++){
+    while (curr != NULL) {
         city temp = curr->key;
-        printf("city = %s \n",temp.name);
-        printf("area = %d \n",temp.area);
-        printf("inhabitans = %d \n",temp.inhabitans);
-        curr=curr->next;
-    }    
-} 
+        printf("city = %s\n", temp.name);
+        printf("area = %d\n", temp.area);
+        printf("inhabitans = %d\n\n", temp.inhabitans);
+        curr = curr->next;
+    }
+}
  
 int main() {
     queue q;
     create_queue(&q);
     city temp;
-    int n = 4 ;
+    int n = 1;
     for(int i = 0 ; i < n ; i ++){
         printf("city = ");
         scanf("%s",temp.name);
@@ -90,10 +104,12 @@ int main() {
         scanf("%d",&temp.inhabitans);
         enqueue(&q, temp);
     }
-    display(&q,n);
+    printf("\n");
+    display(&q);
     printf("\n");
     deleteThirdCity(&q);
-    display(&q,n-1);
+    //delete_starts_S(&q);
+    display(&q);
 
     return 0;
 }
